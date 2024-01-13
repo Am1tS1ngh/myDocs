@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 const dataURI = "https://us-east-1.aws.data.mongodb-api.com/app/mydocsapp-vartu/endpoint/";
-export const loginUser = async (loginData, navigate) => {
+export const loginUser = async (loginData, navigate, setUserID) => {
     try {
       // Send registration data to the server
       const response = await axios.post(`${dataURI}find`, loginData);
@@ -9,9 +9,12 @@ export const loginUser = async (loginData, navigate) => {
       console.log('Login successful:', response.data);
   
       if (email && password) {
-        navigate(`/${validateUser.first_name}/docs`);
+        console.log(validateUser._id);
+        setUserID(validateUser._id)
+        navigate(`/${validateUser._id}/docs`);
         localStorage.setItem("isDocsUserLogin", validateUser.first_name);
         localStorage.setItem("myDocsUserID", validateUser._id)
+
       } else if (!email) {
         toast.error('Invalid username!');
       } else {

@@ -11,7 +11,7 @@ import { convertToBase64 } from "../../public/Base64Converter";
 import { uploadFile } from '../../auth/uploadFile';
 import Logout from './Logout';
 
-function CardForm({reference}) {
+function CardForm({reference, setUserID}) {
     const navigate = useNavigate()
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
@@ -19,7 +19,7 @@ function CardForm({reference}) {
     const [base64String, setBase64String] = useState('');
   
     const [uploadState, setUploadState] = useState("Upload");
-    let { user } = useParams();
+    let { userId } = useParams();
     const handleSubmit = async (e) => {
       e.preventDefault()
       setUploadState("Uploading...")
@@ -29,7 +29,7 @@ function CardForm({reference}) {
     if (success) {
       // Navigate to /user/docs if the upload is successful
       setUploadState("Uploaded");
-      navigate(`/${user}/docs`);
+      navigate(`/${userId}/docs`);
     }
 
       
@@ -37,11 +37,11 @@ function CardForm({reference}) {
   
 
   useEffect(()=>{
-    if(localStorage.getItem("isDocsUserLogin")!==user){
+    if(localStorage.getItem("isDocsUserLogin")!==userId){
       // console.log("string")
       navigate('/NotFound')
     }
-  },[navigate, user])
+  },[navigate, userId])
   return (
     <>
     <motion.div  drag dragConstraints={reference} whileDrag={{scale: 1.1}} dragElastic={0.1} dragTransition={{bounceStiffness: 100, bounceDamping: 10}} className='relative top-1/4 left-1/3 flex-shrink-0 w-1/3 h-1/2 z-[4] rounded-[45px] bg-zinc-900/80 text-white px-8 py-10 overflow-hidden'>
@@ -87,7 +87,7 @@ function CardForm({reference}) {
         {uploadState}
       </button>
     </form>
-    <Logout reference={reference}/>
+    <Logout reference={reference} setUserID={setUserID}/>
     </motion.div>
     </>
   )

@@ -1,15 +1,15 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from "framer-motion"
 
-const Logout = (reference) => {
+const Logout = (reference, setUserID) => {
     const navigate = useNavigate()
     const handleLogout = ()=>{
-        localStorage.setItem("isDocsUserLogin", "")
-        console.log("handleLogout called")
-        console.log( localStorage.getItem("isDocsUserLogin"))
-        navigate('/')
+
+      setUserID(null)
+      navigate('/')
       }
   return (
     <><motion.div

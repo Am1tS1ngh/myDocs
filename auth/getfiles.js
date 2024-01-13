@@ -1,9 +1,9 @@
 import axios from 'axios'
-
 const dataURI = "https://us-east-1.aws.data.mongodb-api.com/app/mydocsapp-vartu/endpoint/";
-const userId = localStorage.getItem("myDocsUserID")
-export const getFiles = async () => {
-    const userData = {"userId" : userId}
+
+export const getFiles = async (userID) => {
+    // const userId = localStorage.getItem("myDocsUserID")
+    const userData = {"userId" : userID}
     try {
         // Send registration data to the server
         const response = await axios.post(`${dataURI}getFiles`, userData);

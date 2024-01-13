@@ -1,20 +1,21 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+
 import {loginUser} from '../../auth/authenticate';
 
-// eslint-disable-next-line react/prop-types
-const Login = () => {
+const Login = ({setUserID, userID}) => {
     const navigate = useNavigate();
-    const isDocsUserLogin = localStorage.getItem("isDocsUserLogin")
+    const userId  =  localStorage.getItem('')
     const [loginData, setLoginData] = useState({})
 
     const handleFormSubmit = (event)=>{
         event.preventDefault();
-        loginUser(loginData, navigate)
+        loginUser(loginData, navigate, setUserID)
     }
 
     const handleInputChange = (event) => {
@@ -26,8 +27,11 @@ const Login = () => {
     };
   
   useEffect(()=>{
-        if(isDocsUserLogin){
-          navigate(`/${isDocsUserLogin}/docs`)
+      console.log("tHIS is user id --> ",userID)
+        if(userID){
+          navigate(`/${userID}/docs`,{
+            state: { setUserID: setUserID, userID: userID },
+          })
         }
   },[])
   return (

@@ -7,6 +7,7 @@ import Card from './Card'
 import CardForm from './CardForm';
 import Upload from './Upload';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { motion } from "framer-motion"
 import Login from './Login';
 import { getFiles } from '../../auth/getfiles';
@@ -16,30 +17,24 @@ import Logout from './Logout';
 
 
 
-
 function Foreground() {
-    const navigate = useNavigate()
-    let { user } = useParams();
-    const ref = useRef(null);
-    const userId = localStorage.getItem("myDocsUserID");
-    const [files, setFiles] = useState([]);
+  const navigate = useNavigate()
+  const location = useLocation();
+  const { setUserID, userID } = location.state || {};
 
-
-    
-
-    // 
-  
-
+  let { userId } = useParams();
+  const ref = useRef(null);
+  const [files, setFiles] = useState([]);
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          if (user !== localStorage.getItem("isDocsUserLogin")) {
+          if (userId !== userID) {
             navigate('/NotFound');
             return;
           }
   
-          const result = await getFiles(userId);
+          const result = await getFiles(userID);
           setFiles(result);
         } catch (error) {
           // Handle error
@@ -49,20 +44,20 @@ function Foreground() {
   
       fetchData();
       
-    }, [userId, user]);
+    }, [userId]);
 
   return (
     <>
 
       <div ref={ref} className='fixed z-[3] top-0 left-0 w-full h-full flex gap-10 flex-wrap p-5'>
-        <Upload reference={ref} user={user}/>
+        <Upload reference={ref} userId={userId}/>
         { files.length !== 0 ?
         files.map((item, index) => (
           <Card data={item} key={index} reference={ref} />
         )): <NoFilesAlert reference={ref} />
 }
         {/* <LoadingCard/> */}
-        <Logout reference={ref}/>
+        <Logout reference={ref} setUserID={setUserID} />
       </div>
     </>
   )
