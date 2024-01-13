@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { LuFileSpreadsheet } from "react-icons/lu";
 import { motion } from "framer-motion"
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { convertToBase64 } from "../../public/Base64Converter";
 import { uploadFile } from '../../auth/uploadFile';
@@ -13,18 +13,21 @@ import Logout from './Logout';
 
 function CardForm({reference}) {
     const navigate = useNavigate()
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search);
+    const userId = searchParams.get('userId');
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [file, setFile] = useState("");
     const [base64String, setBase64String] = useState('');
-  
     const [uploadState, setUploadState] = useState("Upload");
+    console.log("card form has this ", userId);
     let { user } = useParams();
     const handleSubmit = async (e) => {
       e.preventDefault()
       setUploadState("Uploading...")
-
-      const success = await uploadFile({ title, desc, file });
+      console.log("Uploading to ",userId)
+      const success = await uploadFile({ title, desc, file, userId});
 
     if (success) {
       // Navigate to /user/docs if the upload is successful

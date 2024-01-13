@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 const Logout = (reference) => {
     const navigate = useNavigate()
     const handleLogout = ()=>{
-        localStorage.setItem("isDocsUserLogin", "")
+        localStorage.clear()
         console.log("handleLogout called")
         console.log( localStorage.getItem("isDocsUserLogin"))
         navigate('/')

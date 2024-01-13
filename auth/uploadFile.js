@@ -2,9 +2,9 @@ import axios from 'axios'
 
 
 const dataURI = "https://us-east-1.aws.data.mongodb-api.com/app/mydocsapp-vartu/endpoint/";
-const userId = localStorage.getItem("myDocsUserID")
+
 // https://us-east-1.aws.data.mongodb-api.com/app/mydocsapp-vartu/endpoint/addFile
-export const uploadFile = async ({ title, desc, file }) => {
+export const uploadFile = async ({ title, desc, file, userId }) => {
     
     const formData = new FormData();
     formData.append('file', file);

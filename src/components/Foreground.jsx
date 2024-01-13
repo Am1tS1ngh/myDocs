@@ -23,7 +23,7 @@ function Foreground() {
     const ref = useRef(null);
     const userId = localStorage.getItem("myDocsUserID");
     const [files, setFiles] = useState([]);
-
+    console.log("user id at foreground ",userId)
 
     
 
@@ -55,7 +55,7 @@ function Foreground() {
     <>
 
       <div ref={ref} className='fixed z-[3] top-0 left-0 w-full h-full flex gap-10 flex-wrap p-5'>
-        <Upload reference={ref} user={user}/>
+        <Upload reference={ref} user={user} userId={userId}/>
         { files.length !== 0 ?
         files.map((item, index) => (
           <Card data={item} key={index} reference={ref} />

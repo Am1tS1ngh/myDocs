@@ -8,14 +8,15 @@ import { motion } from "framer-motion"
 import { Link } from 'react-router-dom';
 
 
-function Upload({reference,user}) {
+function Upload({reference,user, userId}) {
+    console.log("upload has this ", userId)
     const handleClick = ()=>{
 
     }
   return (
     <motion.div  drag dragConstraints={reference} whileDrag={{scale: 1.1}} dragElastic={0.1} dragTransition={{bounceStiffness: 100, bounceDamping: 10}} className='relative flex-shrink-0 w-60 h-72 rounded-[45px] bg-zinc-900/90 text-white px-8 py-10 overflow-hidden'>
         <div className='flex-col items-center justify-center w-full left-0'>
-            <Link to={`/${user}/upload`} className='cursor-pointer'>
+            <Link to={`/${user}/upload?userId=${userId}`} className='cursor-pointer'>
             <div className='flex items-center justify-center px-8 py-2'>
                 { <FaUpload size="4em" color='rgba(189, 112, 36, 0.998)' />}
             </div>

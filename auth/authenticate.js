@@ -11,7 +11,8 @@ export const loginUser = async (loginData, navigate) => {
       if (email && password) {
         navigate(`/${validateUser.first_name}/docs`);
         localStorage.setItem("isDocsUserLogin", validateUser.first_name);
-        localStorage.setItem("myDocsUserID", validateUser._id)
+        console.log("after login user id",validateUser.userId)
+        localStorage.setItem("myDocsUserID", validateUser.userId)
       } else if (!email) {
         toast.error('Invalid username!');
       } else {
